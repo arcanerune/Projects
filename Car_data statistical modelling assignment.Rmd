@@ -1,0 +1,156 @@
+---
+title: "DATA 303/473 Assignment 2"
+date:   "Due 6pm Friday 26 March"
+output:
+  pdf_document:
+    df_print: paged
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+## Intructions
+
+*  Prepare your assignment using Rmarkdown
+*  Submit your solutions in two files: an Rmarkdown file named `assignment2.Rmd` and the PDF file named `assignment2.pdf` that results from knitting the Rmd file.
+*  The YAML header of your Rmarkdown file must contain your name and ID number in the author field, and should have the output format set to `pdf_document`. For example:
+
+```{r eval=FALSE}
+---
+title: "DATA 303 Assignment 2"
+author: "Nokuthaba Sibanda, 301111111"
+date: "Due: 26 March 2021"
+output: pdf_document
+---
+```
+*  While you are developing your code you may find it easiest to have the output set to `html_document`, but change it to `pdf_document` when you submit.
+*  In your submission, embed any executable R code in code chunks, and make sure both the R code and the output is displayed correctly when you knit the document.
+*  If there are any R code errors, then the Rmarkdown file will not knit, and no output will be created at all. So if you can't get your code to work, but want to show your attempted code, then put `error=TRUE` in the header of the R code chunk that is failing.
+
+````
+```{r, error=TRUE}`r ''`
+your imperfect R code
+```
+````
+*  Where appropriate, make sure you include your comments in the output within the Rmarkdown document.
+*  **You will receive an email confirming your submission.  Check the email to be sure it shows both the Rmd and PDF files have been submitted.**
+*  Title each question answer with its question numbers as `Q1.`, `Q2`,... instead of `1.`,`2.`,....
+*  Where you are asked to perform a hypothesis test, state the hypotheses being tested and give the test statistic, p-value and conclusion.
+
+\newpage
+
+## Assignment Questions
+
+**Q1.(30 marks)**   The dataset `fiat.csv`contains 1538 records on sales of used Fiat 500 cars in Italy.  The variables in the dataset are:
+
+*  `model`: Fiat 500 comes in several 'flavours' :'pop', 'lounge', 'sport'
+*  `power`: number of Kw of the engine
+*  `age`: age of the car in number of days (at the time dataset was created)
+*  `km`: Distance travelled by the car in kilometers
+*  `owners`: number of previous owners
+*  `lat`: latitude of the seller (the price of cars in Italy varies from North to South of the country)
+*  `lon`: longitude of the seller (the price of cars in Italy varies from North to South of the country)
+*  `price`: selling price (in Euro)
+
+The data are available on Blackboard in the file `fiat.csv`.  They were sourced from Kaggle and can be found on: https://www.kaggle.com/paolocons/another-fiat-500-dataset-1538-rows.
+
+We are interested in identifying the key predictors of `price`, and in understanding how these predictors affect `price`. Model interpretability is important in this case. The initial steps in building a model for `price` are shown in the Appendix on pages 3 to 6.
+
+As there is evidence of non-normality and non-constant variance, a log-transformation for `price` is to be applied in the rest of the analyses.  Prepare the data as has been done in the Appendix, and use your new dataset to answer the questions below.
+
+a.  **(4 marks)**  Fit a generalised additive model for `log(price)`, including all predictors used in `fit1` in the Appendix.  Use a smooth spline for each numerical predictor.  Comment on the non-linearity and significance of all smooth terms.
+b.  **(5 marks)** Perform a diagnostic check of regression assumptions and adequacy of basis functions for the model you fitted in part (b).  What conclusions do you draw from your results? 
+c.   **(4 marks)** For ease of interpretation, a linear model is preferred to a GAM.  Fit a linear model (using `lm`) for `log(price)` with predictors as shown in model `fit1`.  Based on your fitted model, give a mathematical interpretation of the effect of `age` on `price`. 
+d.   **(5 marks)**  Use stepwise model selection procedures for the model in part (c) based on $AIC$ and $BIC$ to determine whether any of the predictors can be excluded from the model. List the predictors included in your preferred model in each case and justify your answer.
+e.  **(4 marks)**  Use Mallow's $C_p$ to perform model selection on the model in part (c).  List the predictors included in your preferred model.  
+f.  **(4 marks)**  It is known that the price of cars in Italy varies from North to South of the country.  You also suspect that the effect of `lat` varies by `model`, and you therefore investigate the interaction between `lat` and `model`.  Add the interaction `model:lat` to the preferred model based on $AIC$ in part (d). Obtain an interaction plot and use it to describe briefly the effect of `lat` on `log(price)`
+g.  **(4 marks)** Obtain and print in a table, the $AIC$ and $BIC$ values for your $AIC$-based preferred model in part (d) and the model in part (f).  Based on these values, state whether or not you would include the interaction term in your final preferred model and justify your answer.
+
+2.  **Q2. (10 marks)**  Suppose we have a data set with five predictors:  $X_1=$`GPA`, $X_2=$`IQ`, $X_3=$`Gender`(0=female, 1=male), $X_4=$Interaction between `GPA` and `IQ`, and $X_5=$Interaction between `GPA` and `Gender`.  The response variable, $Y$, is starting salary after graduation (in thousands of dollars).  Suppose we get the following regression coefficient estimates:
+
+
+$$\hat\beta_0=50, \quad \hat\beta_1=20, \quad \hat\beta_2=0.07, \quad \hat\beta_3=40,$$
+$$\hat\beta_4=0.005, \quad \hat\beta_5=-8$$
+
+a.  **(2 marks)** Write down the estimated model equation in terms of $\hat Y$, $X_1$, $X_2$ and $X_3$.
+b.  **(4 marks)** Which one of the following statements is correct and why? Show any working you do.
+    i.  For a fixed value of IQ and GPA, males earn more on average than females.
+    ii.  For a fixed value of IQ and GPA, females earn more on average than males.
+    iii.  For a fixed value of IQ and GPA, males earn more on average than females provided that the GPA is high enough.
+    iv.  For a fixed value of IQ and GPA, females earn more on average than males provided that the GPA is high enough.
+c.  **(2 marks)** Predict the salary of a female with IQ of 110 and a GPA of 8.0.
+d.  **(2 marks)** True or False:   Since the coefficient for the GPA:IQ interaction term is very small, there is very little evidence of an interaction effect. Justify your answer.
+
+
+**Assignment total: 40 marks**
+
+---------------
+
+### Appendix:  Data preparation and initial analysis for Question 1
+
+```{r}
+library(dplyr)
+library(memisc)
+fiat<-read.csv("fiat.csv", header=T)
+str(fiat)
+##Changing owners and power into categorical variables as they have very few unique values
+fiat$owners<-as.factor(fiat$owners)
+fiat<-fiat%>%
+  mutate(power.cat=memisc::recode(power,"50-59"<-c(50:59),
+                               "60-69"<-c(60:69),
+                               "70-79"<-c(70:79)))%>%
+  dplyr::select(-power)
+str(fiat)
+```
+
+\newpage
+
+```{r, fig.align='center', fig.height = 4, fig.width = 8}
+##EDA
+library(psych); library(ggplot2); library(ape); library(gridExtra)
+fiat%>% 
+  dplyr::select(where(is.numeric))%>%  #select numerical variables (includes integers)
+  pairs.panels(method = "spearman", hist.col = "lightgreen", density = TRUE, ellipses = FALSE )
+
+a<-ggplot(fiat,aes(x=owners,y=price))+ geom_boxplot()
+b<-ggplot(fiat,aes(x=power.cat,y=price))+ geom_boxplot()
+grid.arrange(a,b, nrow=1)
+```
+
+\newpage 
+
+
+```{r, fig.align='center', fig.height = 3.5, fig.width = 8}
+##Non-normality and non-constant variance check
+fit1<-lm(price ~ model + power.cat + age + km + owners + lat + lon, data=fiat)
+shapiro.test(fit1$res) ##Shapiro-Wilk test
+library(lmtest)
+bptest(fit1) ##Breusch-Pagan test
+
+##Non-linearity assessment
+library(ggplot2)
+library(gridExtra)
+a<-ggplot(fiat,aes(x=age, y=price))+
+  geom_point()+ geom_smooth(method='loess')+
+  labs(x="Car age (days)", y="Price")+ theme_bw()
+b<-ggplot(fiat,aes(x=km, y=price))+
+  geom_point()+ geom_smooth(method='loess')+
+  labs(x="Distance travelled (km)", y="Price")+ theme_bw()
+c<-ggplot(fiat,aes(x=lat, y=price))+
+  geom_point()+ geom_smooth(method='loess')+
+  labs(x="Latitude", y="Price")+ theme_bw()
+d<-ggplot(fiat,aes(x=lon, y=price))+
+  geom_point()+ geom_smooth(method='loess')+
+  labs(x="Longitude", y="Price")+ theme_bw()
+grid.arrange(a,b,c,d, nrow=2)
+
+###Multicollinearity assessment
+library(car)
+vif(fit1)
+```
+
+
+
